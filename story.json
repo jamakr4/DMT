@@ -1,0 +1,225 @@
+{
+  "inkVersion": 21,
+  "root": [
+    [
+      "#",
+      "^# gptcontext: Du bist ein Expert für den Backfire Effekt und dein Ziel ist es dem user nützlices Wissen zu vermitteln und tolle Fakten zu nennen",
+      "/#",
+      { "->": "intro" },
+      ["done", { "#f": 5, "#n": "g-0" }],
+      null
+    ],
+    "done",
+    {
+      "intro": [
+        [
+          "#",
+          "^gpt:on",
+          "/#",
+          "#",
+          "^choices:on",
+          "/#",
+          "#",
+          "^gptprompt: Du bist ein Expert für den Backfire Effekt und dein Ziel ist es dem user nützlices Wissen zu vermitteln und tolle Fakten zu nennen",
+          "/#",
+          "^Du liest einen Artikel über George Washingtons Zähne. Der Artikel behauptet, Washington hatte kein Holzgebiss, sondern eines aus echten menschlichen Zähnen, die teilweise von Sklaven stammten.",
+          "\n",
+          "^Wie reagierst du?",
+          "\n",
+          "ev",
+          "str",
+          "^Das überrascht mich, aber ich akzeptiere die Information.",
+          "/str",
+          "/ev",
+          { "*": ".^.c-0", "flg": 4 },
+          "ev",
+          "str",
+          "^Das klingt falsch. Das glaube ich nicht.",
+          "/str",
+          "/ev",
+          { "*": ".^.c-1", "flg": 4 },
+          {
+            "c-0": [
+              "\n",
+              "ev",
+              { "VAR?": "openness" },
+              1,
+              "+",
+              { "VAR=": "openness", "re": true },
+              "/ev",
+              { "->": "openness_check" },
+              { "#f": 5 }
+            ],
+            "c-1": [
+              "\n",
+              "ev",
+              { "VAR?": "openness" },
+              1,
+              "-",
+              { "VAR=": "openness", "re": true },
+              "/ev",
+              { "->": "openness_check" },
+              { "#f": 5 }
+            ]
+          }
+        ],
+        { "#f": 1 }
+      ],
+      "openness_check": [
+        "ev",
+        { "VAR?": "openness" },
+        0,
+        ">",
+        "/ev",
+        [
+          { "->": ".^.b", "c": true },
+          {
+            "b": [
+              "\n",
+              "^Du akzeptierst die neue Information, auch wenn sie dir unangenehm ist.",
+              "\n",
+              { "->": "second_fact" },
+              { "->": ".^.^.^.7" },
+              null
+            ]
+          }
+        ],
+        [
+          { "->": ".^.b" },
+          {
+            "b": [
+              "\n",
+              "^Du spürst eine innere Ablehnung gegen die neue Information. Dein Gehirn verteidigt sich emotional.",
+              "\n",
+              { "->": "second_fact" },
+              { "->": ".^.^.^.7" },
+              null
+            ]
+          }
+        ],
+        "nop",
+        "\n",
+        { "#f": 1 }
+      ],
+      "second_fact": [
+        [
+          "#",
+          "^gpt:on",
+          "/#",
+          "#",
+          "^choices:on",
+          "/#",
+          "#",
+          "^gptprompt: Du bist ein Expert für den Backfire Effekt und dein Ziel ist es dem user nützlices Wissen zu vermitteln und tolle Fakten zu nennen.",
+          "/#",
+          "^Der Artikel präsentiert nun eine weitere Information: „Wusstest du, dass Menschen, wenn sie mit Fakten konfrontiert werden, die ihren Überzeugungen widersprechen, diese oft sogar stärker verteidigen?“",
+          "\n",
+          "^Wie reagierst du darauf?",
+          "\n",
+          "ev",
+          "str",
+          "^Interessant. Ich werde versuchen, offen dafür zu sein.",
+          "/str",
+          "/ev",
+          { "*": ".^.c-0", "flg": 4 },
+          "ev",
+          "str",
+          "^Jetzt fühle ich mich noch stärker angegriffen!",
+          "/str",
+          "/ev",
+          { "*": ".^.c-1", "flg": 4 },
+          {
+            "c-0": [
+              "\n",
+              "ev",
+              { "VAR?": "openness" },
+              1,
+              "+",
+              { "VAR=": "openness", "re": true },
+              "/ev",
+              { "->": "self_reflection" },
+              { "#f": 5 }
+            ],
+            "c-1": [
+              "\n",
+              "ev",
+              { "VAR?": "openness" },
+              1,
+              "-",
+              { "VAR=": "openness", "re": true },
+              "/ev",
+              { "->": "self_reflection" },
+              { "#f": 5 }
+            ]
+          }
+        ],
+        { "#f": 1 }
+      ],
+      "self_reflection": [
+        [
+          "#",
+          "^gpt:on",
+          "/#",
+          "#",
+          "^choices:off",
+          "/#",
+          "#",
+          "^gptprompt: Der Spieler wurde mehrfach mit kognitiv dissonanten Informationen konfrontiert. Frag ihn in freundlichem Ton, wie es ihm geht und ob er tolle Fakten zu dem Thema hören will, falls ja nenne ihm Interessante Fakten zum Backfire Effekt",
+          "/#",
+          "^Wie fühlst du dich nach diesen Gedanken?",
+          "\n",
+          "ev",
+          "str",
+          "^Benutzer hat etwas zu seinen Gefühlen oder Gedanken gesagt.",
+          "/str",
+          "/ev",
+          { "*": ".^.c-0", "flg": 4 },
+          { "c-0": ["\n", { "->": "conclusion" }, { "#f": 5 }] }
+        ],
+        { "#f": 1 }
+      ],
+      "conclusion": [
+        "#",
+        "^gpt:off",
+        "/#",
+        "ev",
+        { "VAR?": "openness" },
+        1,
+        ">=",
+        "/ev",
+        [
+          { "->": ".^.b", "c": true },
+          {
+            "b": [
+              "\n",
+              "^Am Ende erkennst du, dass du – wie jeder Mensch – anfällig für den Backfire-Effekt bist. Du beschließt, ab jetzt achtsamer und offener gegenüber neuen Fakten zu sein.",
+              "\n",
+              "end",
+              { "->": ".^.^.^.10" },
+              null
+            ]
+          }
+        ],
+        [
+          { "->": ".^.b" },
+          {
+            "b": [
+              "\n",
+              "^Du hast gemerkt, wie stark dein Widerstand gegen neue Informationen sein kann. Vielleicht denkst du später noch einmal darüber nach?",
+              "\n",
+              "end",
+              { "->": ".^.^.^.10" },
+              null
+            ]
+          }
+        ],
+        "nop",
+        "\n",
+        { "#f": 1 }
+      ],
+      "global decl": ["ev", 0, { "VAR=": "openness" }, "/ev", "end", null],
+      "#f": 1
+    }
+  ],
+  "listDefs": {}
+}

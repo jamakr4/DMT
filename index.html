@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>GPT + Ink Hybrid</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    #story p { margin-bottom: 1em; }
+    #userInputArea { margin-top: 2em; }
+  </style>
+</head>
+<body>
+
+  <div id="story"></div>
+
+  <div id="userInputArea">
+    <input type="text" id="userInput" placeholder="Was willst du tun?">
+    <button onclick="handleUserInput()">Senden</button>
+  </div>
+
+  <script src="ink.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
